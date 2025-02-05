@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskManagerTheme {
                 val taskViewModel by viewModels<TaskViewModel>()
-                Navigation(taskViewModel)
+                Navigation(CommonViewModel)
             }
         }
     }
