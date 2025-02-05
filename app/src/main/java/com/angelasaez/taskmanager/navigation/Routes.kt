@@ -7,7 +7,13 @@ sealed class Routes {
     object Splash
 
     @Serializable
-    object Main
+    object OnBoarding
+
+    @Serializable
+    object MainTask
+
+    @Serializable
+    object InfoTask
 }
 
 

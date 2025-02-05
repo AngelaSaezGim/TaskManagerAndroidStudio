@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.angelasaez.taskmanager.navigation.Navigation
-import com.angelasaez.taskmanager.ui.theme.TaskManagerTheme
-import com.angelasaez.taskmanager.tasks.ui.viewmodel.TaskViewModel
+import com.angelasaez.taskmanager.common.ui.theme.TaskManagerTheme
+import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel.TaskViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
