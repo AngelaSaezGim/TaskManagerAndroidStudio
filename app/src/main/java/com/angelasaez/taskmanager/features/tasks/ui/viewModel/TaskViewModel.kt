@@ -1,4 +1,4 @@
-package com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel
+package com.angelasaez.taskmanager.features.tasks.ui.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -62,6 +62,8 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
             taskUseCase.updateTask(task.copy(isDone = isDone, description = description))
         }
     }
+
+    //FALTA GET TASK BY ID (infoTask)
 }
 
 

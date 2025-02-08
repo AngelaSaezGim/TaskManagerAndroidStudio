@@ -20,10 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.angelasaez.taskmanager.R
 
+
 // Componente propio para mostrar la información del autor
 
 @Composable
-fun AuthorInfo(modifier: Modifier = Modifier) {
+fun AuthorInfo(modifier: Modifier = Modifier, username: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,23 +37,17 @@ fun AuthorInfo(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.rick),
-            contentDescription = "Foto de Rick",
+            painter = painterResource(id = R.drawable.profile),
+            contentDescription = "Foto perfil",
             modifier = Modifier
                 .clip(CircleShape)
-                .border(
-                    width = 3.dp,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    shape = CircleShape
-                )
                 .width(60.dp)
         )
         Text(
-            text = "Rick Sanchez",
-            fontSize = 35.sp,
+            text = "Usuario : $username",
+            fontSize = 25.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
-

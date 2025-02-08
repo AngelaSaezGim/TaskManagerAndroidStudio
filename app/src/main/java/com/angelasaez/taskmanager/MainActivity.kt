@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.angelasaez.taskmanager.navigation.Navigation
 import com.angelasaez.taskmanager.common.ui.theme.TaskManagerTheme
-import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel.TaskViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.TaskViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,8 +15,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TaskManagerTheme {
+                // HE DE CREAR UN VIEW MODEL COMUN PARA TODAS??
                 val taskViewModel by viewModels<TaskViewModel>()
-                Navigation(CommonViewModel)
+                Navigation(taskViewModel)
             }
         }
     }

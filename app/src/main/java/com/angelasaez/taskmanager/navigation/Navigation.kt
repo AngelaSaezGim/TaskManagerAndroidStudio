@@ -5,14 +5,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.angelasaez.taskmanager.features.onboarding.ui.OnBoardingScreen
-import com.angelasaez.taskmanager.features.onboarding.ui.viewmodel.OnBoardingScreenViewModel
 import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.MainTasksScreen
 import com.angelasaez.taskmanager.features.splash.ui.SplashScreen
-import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel.TaskViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.TaskViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.taskinfoscreen.InfoTasksScreen
 
 
 @Composable
-fun Navigation(taskViewModel: TaskViewModel, onBoardingScreenViewModel: OnBoardingScreenViewModel) {
+fun Navigation(taskViewModel: TaskViewModel) {
     val navController = rememberNavController()
 
     NavHost(
@@ -20,18 +20,23 @@ fun Navigation(taskViewModel: TaskViewModel, onBoardingScreenViewModel: OnBoardi
         startDestination = Routes.Splash
     ) {
         composable<Routes.Splash> {
-            SplashScreen(navController, taskViewModel)
+            SplashScreen(navController)
         }
 
         composable<Routes.OnBoarding> {
-            OnBoardingScreen(onBoardingScreenViewModel)
+            OnBoardingScreen(navController)
         }
 
         composable<Routes.MainTask> {
-            MainTasksScreen(taskViewModel)
+            MainTasksScreen(navController, taskViewModel)
         }
 
-        //Falta InfoTasksScreen
+        composable("taskDetailScreen/{taskId}") { backStackEntry ->
+            val taskId = backStackEntry.arguments?.getString("taskId")
+            taskId?.let {
+                InfoTasksScreen(navController, taskViewModel, it)
+            }
+        }
     }
 }
 

@@ -13,7 +13,7 @@ sealed class Routes {
     object MainTask
 
     @Serializable
-    object InfoTask
+    data class InfoTask(val taskId: String)
 }
 
 

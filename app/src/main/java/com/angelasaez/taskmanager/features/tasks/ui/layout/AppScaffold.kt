@@ -10,8 +10,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.angelasaez.taskmanager.features.tasks.ui.layout.viewmodel.UserViewModel
 
 // Componente propio para tener un Scaffold unificado en toda la aplicación
 
@@ -19,13 +24,19 @@ import androidx.compose.ui.unit.dp
 fun AppScaffold(
     showBackArrow: Boolean = false,
     onBlackArrowClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    navController: NavController
 ) {
+    //obtener datos usuario para mostrarlos abajo y hacer gestiones como la de cerrar sesion (vaciar)
+    val userViewModel: UserViewModel = viewModel()
+    val username by userViewModel.username.observeAsState("")
+
     Scaffold(
         topBar = {
             AppTopBar(
                 showBackArrow = showBackArrow,
                 onClickBlackArrow = onBlackArrowClick,
+                navController = navController
             )
         },
     ) { paddingValues ->
@@ -46,7 +57,7 @@ fun AppScaffold(
             )
             AuthorInfo(modifier = Modifier
                 .padding(vertical = 4.dp)
-                .weight(1f))
+                .weight(1f), username)
         }
     }
 }

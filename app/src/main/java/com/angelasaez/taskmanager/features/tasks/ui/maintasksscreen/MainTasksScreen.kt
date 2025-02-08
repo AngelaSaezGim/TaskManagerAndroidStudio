@@ -39,14 +39,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.angelasaez.taskmanager.common.ui.utils.CustomSpacer
 import com.angelasaez.taskmanager.features.tasks.domain.model.Task
 import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel.MainScreenViewModel
-import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.viewmodel.TaskViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.TaskViewModel
 import com.angelasaez.taskmanager.ui.screens.layout.AppScaffold
 
+
 @Composable
-fun MainTasksScreen(taskViewModel: TaskViewModel) {
-    AppScaffold { // Uso del Scaffold personalizado
+fun MainTasksScreen(navController: NavHostController, taskViewModel: TaskViewModel) {
+    AppScaffold(navController = navController,  // SINO NO PODIA PASARLE EL CONTROLLER AL SCAFFOLD
+
+                content = {
         val taskList by taskViewModel.taskList.observeAsState(emptyList())
         val mainScreenViewModel = remember { MainScreenViewModel() }
         val inputTaskName by mainScreenViewModel.taskName.observeAsState(initial = "")
@@ -57,6 +62,10 @@ fun MainTasksScreen(taskViewModel: TaskViewModel) {
         }
 
         var showInsertTaskError by rememberSaveable { mutableStateOf(false) }
+
+        // getAllTasks() para cargar las tareas al iniciar la pantalla (YA NO SE HACE EN SPLASH)
+        taskViewModel.getAllTasks()
+
         Box {
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -68,24 +77,25 @@ fun MainTasksScreen(taskViewModel: TaskViewModel) {
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
                 ) {
+                    CustomSpacer(height=50)
                     TextField(value = inputTaskName,
-                        onValueChange = { mainScreenViewModel.onTaskNameChange(it) },
-                        label = { Text(text = "Tarea a añadir") },
-                        trailingIcon = {
-                            if (showDeleteIcon.value) {
-                                Icon(imageVector = Icons.Default.Delete,
-                                    contentDescription = "Eliminar tarea",
-                                    modifier = Modifier.clickable { mainScreenViewModel.onTaskNameDelete() })
-                            }
-                        })
+                              onValueChange = { mainScreenViewModel.onTaskNameChange(it) },
+                              label = { Text(text = "Tarea a añadir") },
+                              trailingIcon = {
+                                  if (showDeleteIcon.value) {
+                                      Icon(imageVector = Icons.Default.Delete,
+                                           contentDescription = "Eliminar tarea",
+                                           modifier = Modifier.clickable { mainScreenViewModel.onTaskNameDelete() })
+                                  }
+                              })
 
                     Button(
                         onClick = {
                             taskViewModel.addTask(task = inputTaskName,
-                                onResult = { taskAdded ->
-                                    showInsertTaskError = !taskAdded
-                                    if (taskAdded) mainScreenViewModel.onTaskNameDelete()
-                                }
+                                                  onResult = { taskAdded ->
+                                                      showInsertTaskError = !taskAdded
+                                                      if (taskAdded) mainScreenViewModel.onTaskNameDelete()
+                                                  }
                             )
                         },
                         enabled = showDeleteIcon.value
@@ -106,12 +116,13 @@ fun MainTasksScreen(taskViewModel: TaskViewModel) {
                         }
                     ) { task ->
                         TaskItem(task = task,
-                            onUpdate = { isEnded ->
-                                taskViewModel.updateTask(task, isEnded)
-                            },
-                            onDelete = {
-                                taskViewModel.deleteTask(task)
-                            }
+                                 onUpdate = { isEnded ->
+                                     taskViewModel.updateTask(task, isEnded)
+                                 },
+                                 onDelete = {
+                                     taskViewModel.deleteTask(task)
+                                 },
+                                 navController = navController
                         )
                     }
                 }
@@ -122,7 +133,7 @@ fun MainTasksScreen(taskViewModel: TaskViewModel) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable(enabled = false,
-                            onClick = {}),
+                                   onClick = {}),
                     contentAlignment = Alignment.Center
                 ) {
 
@@ -148,7 +159,7 @@ fun MainTasksScreen(taskViewModel: TaskViewModel) {
                 }
             }
         }
-    }
+    })
 }
 
 @Composable
@@ -156,6 +167,7 @@ fun TaskItem(
     task: Task,
     onUpdate: (Boolean) -> Unit,
     onDelete: () -> Unit,
+    navController: NavHostController
 ) {
     var showDeleteIcon by rememberSaveable { mutableStateOf(false) }
     ListItem(
@@ -175,6 +187,9 @@ fun TaskItem(
                     },
                     onPress = {
                         showDeleteIcon = false
+                    },
+                    onTap = {
+                        navController.navigate("taskDetailScreen/${task.id}")
                     }
                 )
             }

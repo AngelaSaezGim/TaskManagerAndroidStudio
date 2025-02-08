@@ -15,28 +15,10 @@ class OnBoardingScreenViewModel (application : Application) : AndroidViewModel(a
     private val _usernameValue = MutableLiveData<String>()
     val usernameValue: LiveData<String> = _usernameValue
 
-    fun loadUsername(){
-        viewModelScope.launch(Dispatchers.IO) {
-            AppPreferences.loadUsername(context)
-                .collect {
-                    _usernameValue.postValue(it)
-
-                }
-        }
-    }
-
     fun saveUsername(usernameParam: String){
         viewModelScope.launch(Dispatchers.IO) {
             AppPreferences.saveUsername(context, usernameParam)
             _usernameValue.postValue(usernameParam)
-        }
-    }
-
-    //NO SE USA AQUI -- HA DE USARSE EN LA BARRA CUANDO BORREMOS USUARIO
-    fun deleteUser() {
-        viewModelScope.launch(Dispatchers.IO) {
-            AppPreferences.removeUsername(context)
-            _usernameValue.postValue("")
         }
     }
 }
