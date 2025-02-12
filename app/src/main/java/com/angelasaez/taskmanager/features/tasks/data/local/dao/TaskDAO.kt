@@ -28,6 +28,10 @@ interface TaskDAO {
 
     @Delete
     suspend fun deleteTask(item: TaskEntity): Int
+
+    //BORRAR TODAS LAS TAREAS SIN PARAMETRO (ej opcional)
+    @Query("DELETE FROM tasks")
+    suspend fun deleteAllTasks(): Int
 }
 
 

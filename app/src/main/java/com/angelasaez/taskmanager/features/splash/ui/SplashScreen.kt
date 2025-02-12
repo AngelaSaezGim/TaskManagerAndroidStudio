@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.angelasaez.taskmanager.R
+import com.angelasaez.taskmanager.common.ui.utils.CustomSpacer
 import com.angelasaez.taskmanager.features.splash.ui.viewmodel.SplashScreenViewModel
 import com.angelasaez.taskmanager.navigation.Routes
 import kotlinx.coroutines.delay
@@ -84,19 +85,21 @@ fun Splash() {
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
+        CustomSpacer(height=10)
         Image(
             painter = painterResource(id= R.drawable.foto_perfil),
             contentDescription = "foto",
             modifier = Modifier
-                .size(200.dp, 200.dp)
+                .size(100.dp, 100.dp)
                 .alpha(alpha)
                 .clip(CircleShape)
                 .border(
-                    width = 10.dp,
+                    width = 4.dp,
                     color = MaterialTheme.colorScheme.primary,
                     shape = CircleShape
                 )
         )
+        CustomSpacer(height=10)
         AnimatedVisibility(visible = greetingVisible) {
             Text(
                 text ="Ángela",

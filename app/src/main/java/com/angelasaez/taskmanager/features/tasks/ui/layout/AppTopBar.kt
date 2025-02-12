@@ -1,6 +1,5 @@
 package com.angelasaez.taskmanager.ui.screens.layout
 
-import android.content.Context
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,7 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.angelasaez.taskmanager.common.ui.utils.CustomSpacer
-import com.angelasaez.taskmanager.features.tasks.ui.layout.viewmodel.UserViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.TaskViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.UserViewModel
 import com.angelasaez.taskmanager.navigation.Routes
 
 // Componente propio para la TopAppBar del Scaffold usado en la APP
@@ -39,6 +39,7 @@ fun AppTopBar(
     showBackArrow: Boolean = false,
     onClickBlackArrow: () -> Unit,
 ) {
+    val taskViewModel: TaskViewModel = viewModel()
     val userViewModel: UserViewModel = viewModel()
     val username by userViewModel.username.observeAsState("")
     var expanded by remember { mutableStateOf(false) }
@@ -81,8 +82,9 @@ fun AppTopBar(
                     text = { Text("Eliminar cuenta (tareas)") },
                     onClick = {
                         expanded = false
-                        userViewModel.deleteUser()
-                        //eliminar tareas (falta)
+                        userViewModel.deleteAllUserTasks(username) // Elimina todas las tareas asociadas
+                        userViewModel.deleteUser() //Cierra sesión
+                        navController.navigate(Routes.OnBoarding)
                     }
                 )
             }
@@ -99,7 +101,7 @@ fun AppTopBar(
             }
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.tertiary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
     )

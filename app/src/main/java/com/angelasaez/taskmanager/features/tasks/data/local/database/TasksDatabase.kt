@@ -15,7 +15,7 @@ abstract class TasksDatabase : RoomDatabase() {
     companion object {  // Patrón Singleton
         private var instance: TasksDatabase? = null
 
-        fun getInstance(context: Context): TasksDatabase {
+        fun getInstance(context: Context, username : String): TasksDatabase {
             // el método databaseBuilder devuelve una referencia a la base de datos
 //            return instance ?: Room.databaseBuilder(context, TasksDatabase::class.java, "tasks-db")
 //                .build()
@@ -25,7 +25,7 @@ abstract class TasksDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TasksDatabase::class.java,
-                    "task_database"
+                    "task_$username"
                 ).build()
                 instance
             }

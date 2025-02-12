@@ -9,10 +9,11 @@ import com.angelasaez.taskmanager.features.tasks.ui.maintasksscreen.MainTasksScr
 import com.angelasaez.taskmanager.features.splash.ui.SplashScreen
 import com.angelasaez.taskmanager.features.tasks.ui.viewModel.TaskViewModel
 import com.angelasaez.taskmanager.features.tasks.ui.taskinfoscreen.InfoTasksScreen
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.UserViewModel
 
 
 @Composable
-fun Navigation(taskViewModel: TaskViewModel) {
+fun Navigation(taskViewModel: TaskViewModel, userViewModel: UserViewModel) {
     val navController = rememberNavController()
 
     NavHost(
@@ -28,13 +29,13 @@ fun Navigation(taskViewModel: TaskViewModel) {
         }
 
         composable<Routes.MainTask> {
-            MainTasksScreen(navController, taskViewModel)
+            MainTasksScreen(navController, taskViewModel, userViewModel)
         }
 
         composable("taskDetailScreen/{taskId}") { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")
             taskId?.let {
-                InfoTasksScreen(navController, taskViewModel, it)
+                InfoTasksScreen(navController, it, taskViewModel, userViewModel)
             }
         }
     }

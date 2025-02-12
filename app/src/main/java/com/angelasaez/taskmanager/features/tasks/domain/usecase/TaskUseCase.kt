@@ -1,5 +1,6 @@
 package com.angelasaez.taskmanager.features.tasks.domain.usecase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.angelasaez.taskmanager.features.tasks.data.repository.TaskRepository
 import com.angelasaez.taskmanager.features.tasks.domain.model.Task
@@ -22,7 +23,16 @@ class TaskUseCase(private val repository: TaskRepository) {
     }
 
     suspend fun updateTask(task: Task) {
+        Log.i("-->", "$task")
         repository.updateTask(task)
+    }
+
+    suspend fun getTaskById(id: Long): Task? {
+        return repository.getTaskById(id)
+    }
+
+    suspend fun deleteAllTasks() {
+        repository.deleteAllTasks()
     }
 }
 

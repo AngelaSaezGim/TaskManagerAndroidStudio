@@ -28,7 +28,7 @@ fun AuthorInfo(modifier: Modifier = Modifier, username: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.tertiary)
             .then(modifier),
         horizontalArrangement = Arrangement.spacedBy(
             20.dp,

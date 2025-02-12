@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.angelasaez.taskmanager.features.tasks.ui.layout.viewmodel.UserViewModel
+import com.angelasaez.taskmanager.features.tasks.ui.viewModel.UserViewModel
 
 // Componente propio para tener un Scaffold unificado en toda la aplicación
 

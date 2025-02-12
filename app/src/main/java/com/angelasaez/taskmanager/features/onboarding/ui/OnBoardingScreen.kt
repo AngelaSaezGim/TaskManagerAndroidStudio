@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -39,14 +40,14 @@ fun OnBoardingScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Bienvenido a Task Manager", style = MaterialTheme.typography.headlineLarge)
+        Text("Bienvenido a Task Manager", style = MaterialTheme.typography.headlineMedium)
 
         CustomSpacer(height = 16)
 
         TextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Ingrese su nombre") },
+            label = { Text("¿Cómo te llamas?") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -62,7 +63,11 @@ fun OnBoardingScreen(navController: NavHostController) {
                     popUpTo(Routes.OnBoarding) { inclusive = true } // Evita que se vuelva
                 }
             },
-            enabled = isButtonEnabled
+            enabled = isButtonEnabled,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,  // Color de fondo del botón
+                contentColor = MaterialTheme.colorScheme.onTertiary // Color del texto dentro del botón
+            )
         ) {
             Text("Continuar")
         }

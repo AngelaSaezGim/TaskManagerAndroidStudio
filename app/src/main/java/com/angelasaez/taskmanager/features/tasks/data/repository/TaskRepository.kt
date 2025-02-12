@@ -25,6 +25,21 @@ class TaskRepository(private val taskDAO: TaskDAO) {
 
     suspend fun deleteTask(task: Task) = taskDAO.deleteTask(TaskEntity(id = task.id, name = task.name))
 
-    suspend fun updateTask(task: Task) = taskDAO.updateTask(TaskEntity(id = task.id, name = task.name, isDone = task.isDone))
+    suspend fun updateTask(task: Task) = taskDAO.updateTask(TaskEntity(id = task.id, name = task.name, isDone = task.isDone, description = task.description))
+
+    suspend fun getTaskById(id: Long): Task? {
+        return taskDAO.getTaskById(id)?.let { taskEntity ->
+            Task(
+                id = taskEntity.id,
+                name = taskEntity.name,
+                isDone = taskEntity.isDone
+            )
+        }
+    }
+
+    //ej opcional
+    suspend fun deleteAllTasks() {
+        taskDAO.deleteAllTasks()
+    }
 }
 
